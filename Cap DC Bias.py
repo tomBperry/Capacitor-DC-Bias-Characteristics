@@ -70,10 +70,6 @@ for x in range(lowerDataBound, upperDataBound):
         tTrim.append(t[x])
         vTrim.append(v[x])
 
-# print(len(tTrim))
-# print(upperDataBound-lowerDataBound)
-
-
 
 # Moving average
     # Moving average over M on data of size N
@@ -101,11 +97,8 @@ for x in range(length):
         tAvg.append(roundSig(tTemp/M, 10))
         vAvg.append(roundSig(vTemp/M, 10))
         
-    if(x % round(length/10) == 0): # This progess logic would require non-integer indices to be able to work
+    if(x % round(length/20) == 0): # This progess logic would require non-integer indices to be able to work
         print("Averaging: " + str(round(100*x/length)) + " % done.")
-        # print(x/length)
-
-# print(len(tAvg))
 
 
 
@@ -128,12 +121,7 @@ for x in range(length):
         else:
             C.append(0)
 
-    # else:
-        # C.append(0)
-        # del vAvg[0]
-
-
-    if (x % round(length/5) == 0): # This progess logic would require non-integer indices to be able to work
+    if (x % round(length/5) == 0): 
         print("Finding Capacitance: " + str(round(100*x/length)) + " % done.")
 
 
@@ -199,8 +187,6 @@ plt.savefig(r'C:\Users\tomp\Documents\Python\Cap DC Bias\Cap vs V.png')
 
 
 plt.show()
-    # Add gridlines, axis labels, title, axis labels (show 0 and 35V)
     # change colour, data point size
-    # Show data length, M, capacitance at 12V/24V
 
 # input('Press ENTER to exit')
