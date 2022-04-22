@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 
-from csv import reader
+import csv
 from math import log10, floor
 
 def roundSig(x, sig = 2):
@@ -14,22 +14,25 @@ def roundSig(x, sig = 2):
 
 
 minV = 0.2
-maxV = 30.5
+maxV = 47.5
 
 maxC = 500.0 # Sanity check
 
 t = []
 v = []
 
-M = 0.1  # Define this from the length of the data? After the trim (0.2 seems to work well)
-dataSelectionRate = 1
+M = 0.2  # Define this from the length of the data? After the trim (0.2 seems to work well)
+dataSelectionRate = 40
 
-csvFileName = r'C:\Users\tomp\OneDrive - tdkgroup\Documents\Python\Cap DC Bias\DH CH2 Caps\Original 60724M\Original 50V 4.7uF.csv'
+    # Need to import os or some other package to be able to implement this auto naming
+# outputName = '60724M 50V 2'
+
+csvFileName = r'C:\Users\tomp\OneDrive - tdkgroup\Documents\Python\Cap DC Bias\DH CH2 Caps\Original 60724M\Part 2\Original 50V 4.7uF Part 2 trailing current 1.csv'
 #r'C:\Users\tomp\Documents\Python\Cap DC Bias\csvFile.csv'
 #'DH Cap Bank 2k.csv'  #"capBankPlusNine"
 
 with open(csvFileName, 'r') as read_obj:
-    csvReader = reader(read_obj)
+    csvReader = csv.reader(read_obj)
     list = list(csvReader)
     #print(list)
 
@@ -179,6 +182,31 @@ else:
 
 
 
+
+# Write data to csv
+    # Need the newline parameter to prevent blank rows being added (new to python 3)
+with open(r'C:\Users\tomp\OneDrive - tdkgroup\Documents\Python\Cap DC Bias\Data\Data.csv', 'w', newline='') as OutputFile:
+    # create the csv writer
+    CSVwriter = csv.writer(OutputFile)#, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+    CSVwriter.writerow(["Voltage / V", "Capacitance / uF"])
+    print("Headers printed")
+    # write a row to the csv file
+
+    for x in range(length):
+        CSVwriter.writerow([str(vAvg[x]), str(C[x])])
+    # print("Data Printed")
+    # CSVwriter.writerows(vAvg, C)
+
+
+    # Having issues using pip to install this package
+# import pandas
+# df = pandas.DataFrame(data={"col1": list_1, "col2": list_2})
+# df.to_csv("./file.csv", sep=',',index=False)
+
+
+
+
 # plot C vs V
 
 # plt.plot(t, v)
@@ -186,7 +214,7 @@ else:
 # plt.plot(tAvg, vAvg)
 fig = plt.plot(vAvg, C)
 
-titleInfoText = "60724M " + u"\u03bcF 50V"    #"3NB CH2+1x4u7"
+titleInfoText = "60724M 4.7" + u"\u03bcF 50V (2)"    #"3NB CH2+1x4u7"
 
 plt.title(str(titleInfoText) + " (# points: " + str(dataLength) + ", M = " + str(M) + ", C@12V/24V = " + str(C12) + "/" + str(C24) + u" \u03bcF)")
 
@@ -199,6 +227,8 @@ plt.savefig(r'C:\Users\tomp\OneDrive - tdkgroup\Documents\Python\Cap DC Bias\Cap
 
 
 plt.show()
+
+
     # change colour, data point size
 
 # input('Press ENTER to exit')
